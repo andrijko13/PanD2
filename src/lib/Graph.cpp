@@ -1,11 +1,11 @@
 #include "Graph.h"
 
-AJGraph::AJGraph(int w, int h) {
+pand2::Graph::Graph(int w, int h) {
     this->width = w;
     this->height = h;
 }
 
-AJGraph::~AJGraph() {
+pand2::Graph::~Graph() {
     this->width = 0;
     this->height = 0;
 }

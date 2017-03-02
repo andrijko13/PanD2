@@ -21,7 +21,7 @@
 
 namespace pand2 {
 
-    class AJPosition {
+    class Position {
         public:
             double const getX() { return this->x; };
             double const getY() { return this->y; };
@@ -33,27 +33,34 @@ namespace pand2 {
             double y;
     };
 
-    class AJPhysicsBody {
+    class PhysicsBody {
         public:
-
+            enum PhysicsBodyShape {PhysicsBodyCircle, PhysicsBodyRect};
+            static PhysicsBody BodyWithCircleOfRadius(double radius);
+        protected:
+            PhysicsBody() : width(0), height(0), radius(0) { };
+            ~PhysicsBody() { };
         private:
-
+            PhysicsBodyShape shape;
+            double width;
+            double height;
+            double radius;
     };
 
-    class AJSprite {
+    class Sprite {
 
         public:
 
 
             // METHODS
-            AJSprite();
-            ~AJSprite();
+            Sprite();
+            ~Sprite();
 
 
             // iVARS
 
         private:
-            AJPosition position;
+            Position position;
             int radius;
 
     };

@@ -9,13 +9,13 @@
 
 namespace pand2 {
 
-    class AJEngine {
+    class Engine {
         public:
-            AJEngine(int, int);
-            ~AJEngine();
+            Engine(int, int);
+            ~Engine();
         private:
-            AJGraph   *graph;
-            AJSprite **nodes;
+            Graph   *graph;
+            Sprite **nodes;
 
             void update();
     };

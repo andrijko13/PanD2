@@ -6,10 +6,10 @@
 
 namespace pand2 {
 
-    class AJGraph {
+    class Graph {
         public:
-            AJGraph(int, int);
-            ~AJGraph();
+            Graph(int, int);
+            ~Graph();
         private:
             int width, height;
 
