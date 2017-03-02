@@ -9,7 +9,7 @@
  * and must therefore implement features such as collision detection, impulse generation, and
  * basic kinematic properties for rigid bodies with circular physics bodies.
  *
- * 
+ *
  *
  *
  *
@@ -19,33 +19,44 @@
  *
 */
 
-class AJPosition {
-    public:
-        double const getX() { return this->x; };
-        double const getY() { return this->y; };
-        void const setX(const double &xpos) { this->x = xpos; };
-        void const setY(const double &ypos) { this->y = ypos; };
+namespace pand2 {
 
-    private:
-        double x;
-        double y;
-};
+    class AJPosition {
+        public:
+            double const getX() { return this->x; };
+            double const getY() { return this->y; };
+            void const setX(const double &xpos) { this->x = xpos; };
+            void const setY(const double &ypos) { this->y = ypos; };
 
-class AJSprite {
+        private:
+            double x;
+            double y;
+    };
 
-    public:
+    class AJPhysicsBody {
+        public:
+
+        private:
+
+    };
+
+    class AJSprite {
+
+        public:
 
 
-        // METHODS
-        AJSprite();
-        ~AJSprite();
+            // METHODS
+            AJSprite();
+            ~AJSprite();
 
 
-        // iVARS
+            // iVARS
 
-    private:
-        AJPosition position;
-        int radius;
-        
-};
+        private:
+            AJPosition position;
+            int radius;
+
+    };
+
+}
 #endif

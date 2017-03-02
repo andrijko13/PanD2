@@ -7,14 +7,19 @@
 #include "Graph.h"
 #include "Sprite.h"
 
-class AJEngine {
-    public:
-        AJEngine(int, int);
-        ~AJEngine();
-    private:
-        AJGraph   *graph;
-        AJSprite **nodes;
-        
-        void update();
-};
+namespace pand2 {
+
+    class AJEngine {
+        public:
+            AJEngine(int, int);
+            ~AJEngine();
+        private:
+            AJGraph   *graph;
+            AJSprite **nodes;
+
+            void update();
+    };
+
+}
+
 #endif

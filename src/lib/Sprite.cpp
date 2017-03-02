@@ -1,9 +1,10 @@
 #include "Sprite.h"
 
-AJSprite::AJSprite() {
+
+pand2::AJSprite::AJSprite() {
 
 }
 
-AJSprite::~AJSprite() {
+pand2::AJSprite::~AJSprite() {
 
 }

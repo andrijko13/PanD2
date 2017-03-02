@@ -4,12 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-class AJGraph {
-    public:
-        AJGraph(int, int);
-        ~AJGraph();
-    private:
-        int width, height;
-        
-};
+namespace pand2 {
+
+    class AJGraph {
+        public:
+            AJGraph(int, int);
+            ~AJGraph();
+        private:
+            int width, height;
+
+    };
+
+}
+
 #endif
