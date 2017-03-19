@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (ajengine)
+project (pand2)
 
 set(CMAKE_CXX_COMPILER "g++")
 enable_testing()
@@ -14,8 +14,8 @@ include_directories(include)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 include_directories (${Boost_INCLUDE_DIRS})
 
-set (ajengine_VERSION_MAJOR 0)
-set (ajengine_VERSION_MINOR 1)
+set (pand2_VERSION_MAJOR 0)
+set (pand2_VERSION_MINOR 1)
 
 set(CMAKE_CXX_FLAGS        "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
