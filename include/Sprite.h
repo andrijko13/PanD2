@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ajx/vec2d.h>
 
 /*
  * This class is used to create generic sprites. These should conform to typical Sprite protocol,
@@ -21,23 +22,10 @@
 
 namespace pand2 {
 
-    class Position {
-        public:
-            double const getX() { return this->x; };
-            double const getY() { return this->y; };
-            void const setX(const double &xpos) { this->x = xpos; };
-            void const setY(const double &ypos) { this->y = ypos; };
-
-        private:
-            double x;
-            double y;
-    };
-
     class PhysicsBody {
         public:
             enum PhysicsBodyShape {PhysicsBodyCircle, PhysicsBodyRect};
             static PhysicsBody BodyWithCircleOfRadius(double radius);
-        protected:
             PhysicsBody() : width(0), height(0), radius(0) { };
             ~PhysicsBody() { };
         private:
@@ -58,10 +46,17 @@ namespace pand2 {
 
 
             // iVARS
+            int getRadius() {
+                return this->radius;
+            }
+
+            void setRadius(double r) {
+                this->radius = r;
+            }
 
         private:
-            Position position;
-            int radius;
+            ajx::vec2d<double> position;
+            double radius;
 
     };
 

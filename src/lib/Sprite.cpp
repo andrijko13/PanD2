@@ -1,17 +1,19 @@
 #include "Sprite.h"
 
-pand2::PhysicsBody pand2::PhysicsBody::BodyWithCircleOfRadius(double radius) {
-	pand2::PhysicsBody body;
+using namespace pand2;
+
+PhysicsBody PhysicsBody::BodyWithCircleOfRadius(double radius) {
+	PhysicsBody body;
 	body.shape = PhysicsBodyCircle;
 	body.radius = radius;
 
 	return body;
 }
 
-pand2::Sprite::Sprite() {
-
+Sprite::Sprite() {
+	this->position = ajx::vec2d<double>::VectorWith(0.0,0.0);
 }
 
-pand2::Sprite::~Sprite() {
+Sprite::~Sprite() {
 
 }
