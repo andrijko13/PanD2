@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ajx/vec2d.h>
+#include "common.h"
 
 /*
  * This class is used to create generic sprites. These should conform to typical Sprite protocol,
@@ -46,17 +47,10 @@ namespace pand2 {
 
 
             // iVARS
-            int getRadius() {
-                return this->radius;
-            }
-
-            void setRadius(double r) {
-                this->radius = r;
-            }
 
         private:
-            ajx::vec2d<double> position;
-            double radius;
+            AJPosition position;
+            AJSize     size;
 
     };
 
