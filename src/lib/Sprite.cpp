@@ -9,8 +9,8 @@ namespace pand2 {
 		return body;
 	}
 
-	Sprite::Sprite() {
-		this->position = AJPosition::VectorWith(0.0,0.0);
+	Sprite::Sprite() : position(0.0,0.0), size(0.0,0.0) {
+
 	}
 
 	Sprite::~Sprite() {

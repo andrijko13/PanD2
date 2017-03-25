@@ -48,9 +48,10 @@ namespace pand2 {
 
             // iVARS
 
+            PhysicsBody physicsBody;
+            AJPosition  position;
+            AJSize      size;
         private:
-            AJPosition position;
-            AJSize     size;
 
     };
 
