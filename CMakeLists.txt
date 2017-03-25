@@ -6,7 +6,7 @@ enable_testing()
 
 set(CMAKE_MACOSX_RPATH 1)
 
-set(GCC_COVERAGE_COMPILE_FLAGS "")#"-std=c++11 -stdlib=libc++")
+set(GCC_COVERAGE_COMPILE_FLAGS "-std=c++11")# -stdlib=libc++")
 set(GCC_COVERAGE_LINK_FLAGS    "")
 
 include_directories(include)
