@@ -2,20 +2,24 @@
 
 using namespace pand2;
 
-Engine::Engine(int w, int h) {
-    Graph *g = new Graph(w,h);
-    this->graph = g;
-
-    this->nodes = NULL;
+Engine::Engine(int w, int h) : width(w), height(h), shouldUpdate(false) {
+	map.bitfield = new char[w*h];
 }
 
 Engine::~Engine() {
-    delete this->graph;
-    this->graph = NULL;
-
-    this->nodes = NULL;
+	delete[] map.bitfield;
+	if (updateThread.joinable()) updateThread.join();
 }
 
 void Engine::update() {
-    // run update loop
+	while (shouldUpdate) {
+		time_t current = time(NULL);
+	    double elapsed = difftime(current, lastUpdateTime) * 1000;
+    	userUpdate(lastUpdateTime);
+	}
+}
+
+void Engine::registerUpdateLoop(std::function <void (time_t)>func) {
+	userUpdate = func;
+	this->updateThread = std::thread(&Engine::update, this);
 }
