@@ -18,9 +18,9 @@ namespace pand2 {
             Engine(int, int);
             ~Engine();
 
-            void start() {shouldUpdate = true;};
+            void start() {shouldUpdate = true; lastUpdateTime = clock(); };
             void pause() {shouldUpdate = false; updateThread.join();};
-            void registerUpdateLoop(std::function <void (time_t)>func);
+            void registerUpdateLoop(std::function <void (double)>func);
             void addBitmap(const char *bitfield);
         private:
         	// Declaration of private data strutures
@@ -36,17 +36,21 @@ namespace pand2 {
             std::vector<Sprite> nodes;
             Bitmap map;
 
-            time_t lastUpdateTime;
-            std::function <void (time_t)> userUpdate;
+            clock_t lastUpdateTime;
+            std::function <void (double)> userUpdate;
 
             int width;
             int height;
 
             bool shouldUpdate;
 
+            double frequency;
+            double fps; // frames per second - should be calculated
+
             // private functions
 
             void update();
+            void updatePhysics();
     };
 
 }

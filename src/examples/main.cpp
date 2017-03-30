@@ -9,7 +9,7 @@
 using namespace pand2;
 using namespace std;
 
-void updateWithTimeInterval(time_t t) {
+void updateWithTimeInterval(double t) {
 	cout << "Elapsed time: " << t << endl;
 }
 
