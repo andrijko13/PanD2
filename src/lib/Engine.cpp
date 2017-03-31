@@ -51,6 +51,8 @@ namespace pand2 {
 			} else {
 				std::cout << "Collision? " << std::endl;
 			}
+
+			s->userForce = ForceMake(0.0,0.0);
 		}
 	}
 
