@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <ajx/vec2d.h>
 #include "common.h"
+#include <string>
 
 /*
  * This class is used to create generic sprites. These should conform to typical Sprite protocol,
@@ -51,9 +52,12 @@ namespace pand2 {
             PhysicsBody physicsBody;
             AJPosition  position;
             AJSize      size;
+            std::string name;
         private:
 
     };
+
+    typedef std::shared_ptr<Sprite> SpritePtr;
 
 }
 #endif

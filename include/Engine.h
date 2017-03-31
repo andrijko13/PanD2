@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <thread>
-//#include <function>
+#include <string>
 #include <time.h>
 
 #include "Graph.h"
@@ -15,8 +15,15 @@ namespace pand2 {
 
     class Engine { // TODO mark functions as const!!!
         public:
+
+            const double pand2_update_freq = 70.0;
+
             Engine(int, int);
             ~Engine();
+
+            void addSprite(SpritePtr sprite);
+            void removeAllSprites();
+            void removeSpriteWithName(const std::string &name);
 
             void start() {shouldUpdate = true; lastUpdateTime = clock(); };
             void pause() {shouldUpdate = false; updateThread.join();};
@@ -33,7 +40,7 @@ namespace pand2 {
 
         	std::thread updateThread;
 
-            std::vector<Sprite> nodes;
+            std::vector<SpritePtr> nodes;
             Bitmap map;
 
             clock_t lastUpdateTime;
@@ -50,7 +57,7 @@ namespace pand2 {
             // private functions
 
             void update();
-            void updatePhysics();
+            void updatePhysics(const double &elspased);
     };
 
 }
