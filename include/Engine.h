@@ -11,6 +11,21 @@
 #include "Graph.h"
 #include "Sprite.h"
 
+/*
+ * The engine portion of the physics engine (i.e. the core)
+ *
+ * Some of the most important todo's and wishlist:
+ *
+ * Add determinism, perhaps? It would be nice to have engine with
+ *    each frame being deterministic, so we can sync with server
+ *    every x frames. Also that way we can run an update loop and
+ *    queue results until they are ready to be displayed.
+ *
+ * This can be fiddled with after engine can perform robust
+ *    simulation
+ *
+*/
+
 namespace pand2 {
 
     class Engine { // TODO mark functions as const!!!
