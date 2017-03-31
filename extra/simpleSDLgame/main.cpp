@@ -38,7 +38,7 @@ bool loadTextures(LTexture *textures, const SDL &sdl) {
     return success;
 }
 
-void runEventLoop(const SDL &sdl, LTexture *textures) {
+void runEventLoop(const SDL &sdl, LTexture *textures, const pand2::SpritePtr &redBall) {
     bool quit = false;
     SDL_Event e;
 
@@ -60,7 +60,7 @@ void runEventLoop(const SDL &sdl, LTexture *textures) {
         //textures[TEXTUREBACKGROUND].render(0,0);
         //textures[TEXTUREFOO].render(240,190);
 
-        textures[TEXTUREFINAL].render(100,100,&clips[0]);
+        textures[TEXTUREFINAL].render(redBall->position.x(),SCREEN_HEIGHT - 100 - redBall->position.y(),&clips[0]);
         //textures[TEXTUREFINAL].render(SCREEN_WIDTH-clips[1].w,0,&clips[1]);
         //textures[TEXTUREFINAL].render(0,SCREEN_HEIGHT-clips[2].h,&clips[2]);
         //textures[TEXTUREFINAL].render(SCREEN_WIDTH-clips[3].w,SCREEN_HEIGHT-clips[3].h,&clips[3]);
@@ -95,7 +95,7 @@ int setUpSDL(SDL &sdl, LTexture textures[TEXTURESUM]) {
 }
 
 void updateWithTimeInterval(double t) {
-    std::cout << "Elapsed time: " << t << std::endl;
+    //std::cout << "Elapsed time: " << t << std::endl;
 }
 
 int main (int argc, char **argv) {
@@ -113,10 +113,19 @@ int main (int argc, char **argv) {
         // Lets set up our physics!
         pand2::Engine e(SCREEN_WIDTH, SCREEN_HEIGHT);
         e.registerUpdateLoop(updateWithTimeInterval);
+
+        //std::vector<pand2::SpritePtr> sprites;
+        pand2::SpritePtr redBall = std::make_shared<pand2::Sprite>();
+        redBall->position = pand2::PositionMake(100,100);
+        redBall->physicsBody = pand2::PhysicsBody::BodyWithCircleOfRadius(10);
+        redBall->dynamic = true;
+        redBall->physicsBody.mass = 20.0;
+        e.addSprite(redBall);
+
         e.start();
 
         // after setting up the physics loop, lets run the event loop to see if the user enters any information
-        runEventLoop(sdl, textures);
+        runEventLoop(sdl, textures, redBall);
 
         // if we get here, the user wanted to quit!
         e.pause(); // lets kill the thread, in case we want to start doing something afterwards

@@ -6,7 +6,7 @@ namespace pand2 {
 								    height(h),
 								    shouldUpdate(false),
 								    frequency(pand2_update_freq),
-								    gravityVector(0.0,-9.8),
+								    gravityVector(0.0,.0098),
 								    gravityEnabled(true) {
 
 		map.bitfield = new char[w*h];
@@ -45,11 +45,11 @@ namespace pand2 {
 			Acceleration accel = net / s->physicsBody.mass;
 
 			s->vel += (elapsed * accel); // v = at
-			Position newPosition = (elapsed * s->vel);
+			Position newPosition = (s->position + (elapsed * s->vel));
 			if (verifyBounds(newPosition, s)) {
 				s->position = newPosition;
 			} else {
-				std::cout << "Collision? " << std::endl;
+				std::cout << "Collision: " << accel.y() << std::endl;
 			}
 
 			s->userForce = ForceMake(0.0,0.0);
@@ -65,7 +65,7 @@ namespace pand2 {
 
 			//calculate elapsed time
 			clock_t current = clock();
-		    double elapsed = ((float)(current - lastUpdateTime)) * 1000 / CLOCKS_PER_SEC;
+		    double elapsed = ((float)(current - lastUpdateTime)) * 1000 / CLOCKS_PER_SEC; // holds number of seconds as float
 
 		    // run update if frame complete
 		    if (elapsed >= updateTimeInterval) {

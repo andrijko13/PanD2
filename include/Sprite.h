@@ -33,12 +33,12 @@ namespace pand2 {
             static PhysicsBody BodyWithCircleOfRadius(double radius);
             PhysicsBody() : width(1.0), height(1.0), radius(1.0), mass(1.0) { };
             ~PhysicsBody() { };
+            double mass;
         private:
             PhysicsBodyShape shape;
             double width;
             double height;
             double radius;
-            double mass;
     };
 
     class Sprite {
