@@ -65,6 +65,8 @@ namespace pand2 {
             int height;
 
             bool shouldUpdate;
+            bool gravityEnabled;
+            Force gravityVector;
 
             double frequency;
             double fps; // frames per second - should be calculated
@@ -73,6 +75,8 @@ namespace pand2 {
 
             void update();
             void updatePhysics(const double &elspased);
+
+            bool verifyBounds(const Position &pos, const SpritePtr s);
     };
 
 }

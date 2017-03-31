@@ -2,7 +2,13 @@
 
 namespace pand2 {
 
-	Engine::Engine(int w, int h) : width(w), height(h), shouldUpdate(false), frequency(pand2_update_freq) {
+	Engine::Engine(int w, int h) : 	width(w),
+								    height(h),
+								    shouldUpdate(false),
+								    frequency(pand2_update_freq),
+								    gravityVector(0.0,-9.8),
+								    gravityEnabled(true) {
+
 		map.bitfield = new char[w*h];
 	}
 
@@ -21,8 +27,31 @@ namespace pand2 {
    		// todo
     }
 
+    bool Engine::verifyBounds(const Position &pos, const SpritePtr s) {
+    	Position spos = s->position;
+    	double radius  = s->physicsBody.radius;
+
+    	if (spos.x() - radius < 0 || spos.y() - radius < 0 || spos.x() + radius > width || spos.y() + radius > height) return false;
+    	return true;
+    }
+
 	void Engine::updatePhysics(const double &elapsed) {
-		
+		for (SpritePtr &s: nodes) {
+			// process physics for each node
+			if (!s->dynamic) continue;
+
+			Force net = s->userForce;
+			if (gravityEnabled) net += gravityVector;
+			Acceleration accel = net / s->physicsBody.mass;
+
+			s->vel += (elapsed * accel); // v = at
+			Position newPosition = (elapsed * s->vel);
+			if (verifyBounds(newPosition, s)) {
+				s->position = newPosition;
+			} else {
+				std::cout << "Collision? " << std::endl;
+			}
+		}
 	}
 
 	void Engine::update() {

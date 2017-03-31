@@ -17,6 +17,10 @@ namespace pand2 {
 		return Velocity::VectorWith(dx, dy);
 	}
 
+	Acceleration AccelerationMake(double dx, double dy) {
+		return Acceleration::VectorWith(dx, dy);
+	}
+
 	Impulse ImpulseMake(double dx, double dy) {
 		return Impulse::VectorWith(dx, dy);
 	}

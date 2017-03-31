@@ -8,12 +8,14 @@ namespace pand2 {
 	typedef ajx::vec2d<double> Position;
 	typedef ajx::vec2d<double> Force;
 	typedef ajx::vec2d<double> Velocity;
+	typedef ajx::vec2d<double> Acceleration;
 	typedef ajx::vec2d<double> Impulse;
 
 	Size SizeMake(double width, double height);
 	Position PositionMake(double x, double y);
 	Force ForceMake(double dx, double dy);
 	Velocity VelocityMake(double dx, double dy);
+	Acceleration AccelerationMake(double dx, double dy);
 	Impulse ImpulseMake(double dx, double dy);
 }
 

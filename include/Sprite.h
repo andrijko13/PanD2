@@ -25,19 +25,24 @@
 namespace pand2 {
 
     class PhysicsBody {
+        friend class Sprite;
+        friend class Engine;
+
         public:
             enum PhysicsBodyShape {PhysicsBodyCircle, PhysicsBodyRect};
             static PhysicsBody BodyWithCircleOfRadius(double radius);
-            PhysicsBody() : width(0), height(0), radius(0) { };
+            PhysicsBody() : width(1.0), height(1.0), radius(1.0), mass(1.0) { };
             ~PhysicsBody() { };
         private:
             PhysicsBodyShape shape;
             double width;
             double height;
             double radius;
+            double mass;
     };
 
     class Sprite {
+        friend class Engine;
 
         public:
 
@@ -46,15 +51,23 @@ namespace pand2 {
             Sprite();
             ~Sprite();
 
+            void applyForce(const Force &f);
+            void applyImpulse(const Impulse &i);
+            void clearForce();
+
 
             // iVARS
 
             PhysicsBody physicsBody;
-            Position  position;
-            Size      size;
+            Position    position;
+            Size        size;
             std::string name;
+            bool        dynamic;
         private:
+            Force userForce;
+            Impulse userImpulse;
 
+            Velocity vel;
     };
 
     typedef std::shared_ptr<Sprite> SpritePtr;
