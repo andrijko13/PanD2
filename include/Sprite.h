@@ -50,8 +50,8 @@ namespace pand2 {
             // iVARS
 
             PhysicsBody physicsBody;
-            AJPosition  position;
-            AJSize      size;
+            Position  position;
+            Size      size;
             std::string name;
         private:
 

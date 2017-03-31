@@ -1,23 +1,23 @@
 #include "common.h"
 
 namespace pand2 {
-	AJSize AJSizeMake(double width, double height) {
-		return AJSize::VectorWith(width, height);
+	Size SizeMake(double width, double height) {
+		return Size::VectorWith(width, height);
 	}
 
-	AJPosition AJPositionMake(double x, double y) {
-		return AJPosition::VectorWith(x, y);
+	Position PositionMake(double x, double y) {
+		return Position::VectorWith(x, y);
 	}
 
-	AJForce AJForceMake(double dx, double dy) {
-		return AJForce::VectorWith(dx, dy);
+	Force ForceMake(double dx, double dy) {
+		return Force::VectorWith(dx, dy);
 	}
 
-	AJVelocity AJVelocityMake(double dx, double dy) {
-		return AJVelocity::VectorWith(dx, dy);
+	Velocity VelocityMake(double dx, double dy) {
+		return Velocity::VectorWith(dx, dy);
 	}
 
-	AJImpulse AJImpulseMake(double dx, double dy) {
-		return AJImpulse::VectorWith(dx, dy);
+	Impulse ImpulseMake(double dx, double dy) {
+		return Impulse::VectorWith(dx, dy);
 	}
 }

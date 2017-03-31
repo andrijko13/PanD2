@@ -4,17 +4,17 @@
 #include <ajx/vec2d.h>
 
 namespace pand2 {
-	typedef ajx::vec2d<double> AJSize;
-	typedef ajx::vec2d<double> AJPosition;
-	typedef ajx::vec2d<double> AJForce;
-	typedef ajx::vec2d<double> AJVelocity;
-	typedef ajx::vec2d<double> AJImpulse;
+	typedef ajx::vec2d<double> Size;
+	typedef ajx::vec2d<double> Position;
+	typedef ajx::vec2d<double> Force;
+	typedef ajx::vec2d<double> Velocity;
+	typedef ajx::vec2d<double> Impulse;
 
-	AJSize AJSizeMake(double width, double height);
-	AJPosition AJPositionMake(double x, double y);
-	AJForce AJForceMake(double dx, double dy);
-	AJVelocity AJVelocityMake(double dx, double dy);
-	AJImpulse AJImpulseMake(double dx, double dy);
+	Size SizeMake(double width, double height);
+	Position PositionMake(double x, double y);
+	Force ForceMake(double dx, double dy);
+	Velocity VelocityMake(double dx, double dy);
+	Impulse ImpulseMake(double dx, double dy);
 }
 
 #endif
