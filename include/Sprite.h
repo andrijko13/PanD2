@@ -6,6 +6,7 @@
 #include <ajx/vec2d.h>
 #include "common.h"
 #include <string>
+#include <memory>
 
 /*
  * This class is used to create generic sprites. These should conform to typical Sprite protocol,
@@ -54,6 +55,7 @@ namespace pand2 {
             void applyForce(const Force &f);
             void applyImpulse(const Impulse &i);
             void clearForce();
+            void clearImpulse();
 
 
             // iVARS

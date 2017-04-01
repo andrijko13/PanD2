@@ -24,4 +24,8 @@ namespace pand2 {
 	Impulse ImpulseMake(double dx, double dy) {
 		return Impulse::VectorWith(dx, dy);
 	}
+
+	Inertia InertiaMake(double dx, double dy) {
+		return Inertia::VectorWith(dx, dy);
+	}
 }

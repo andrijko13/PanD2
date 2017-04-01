@@ -16,4 +16,19 @@ namespace pand2 {
 	Sprite::~Sprite() {
 
 	}
+
+	void Sprite::applyForce(const Force &f) {
+		userForce += f;
+	}
+    void Sprite::applyImpulse(const Impulse &i) {
+    	userImpulse += i;
+    }
+    void Sprite::clearForce() {
+    	userForce = ForceMake(0.0,0.0);
+   	}
+   	void Sprite::clearImpulse() {
+    	userForce = ImpulseMake(0.0,0.0);
+    }
+
+
 }

@@ -6,7 +6,7 @@ namespace pand2 {
 								    height(h),
 								    shouldUpdate(false),
 								    frequency(pand2_update_freq),
-								    gravityVector(0.0,.0098),
+								    gravityVector(0.0,-.098),
 								    gravityEnabled(true) {
 
 		map.bitfield = new char[w*h];
@@ -27,11 +27,15 @@ namespace pand2 {
    		// todo
     }
 
+    void Engine::setGravity(const Force &f) {
+    	gravityVector = f;
+    }
+
     bool Engine::verifyBounds(const Position &pos, const SpritePtr s) {
-    	Position spos = s->position;
+    	//const Position pos = posi + PositionMake(ajx::epsilon, ajx::epsilon);
     	double radius  = s->physicsBody.radius;
 
-    	if (spos.x() - radius < 0 || spos.y() - radius < 0 || spos.x() + radius > width || spos.y() + radius > height) return false;
+    	if ((pos.x() - radius - ajx::epsilon) < 0 || (pos.y() - radius - ajx::epsilon) < 0 || (pos.x() + radius + ajx::epsilon) > width || (pos.y() + radius + ajx::epsilon) > height) return false;
     	return true;
     }
 
@@ -40,19 +44,29 @@ namespace pand2 {
 			// process physics for each node
 			if (!s->dynamic) continue;
 
+
+			// handle forces
 			Force net = s->userForce;
 			if (gravityEnabled) net += gravityVector;
 			Acceleration accel = net / s->physicsBody.mass;
 
 			s->vel += (elapsed * accel); // v = at
+
+			s->vel += (s->userImpulse / s->physicsBody.mass);
+
+			// calculate new position
 			Position newPosition = (s->position + (elapsed * s->vel));
 			if (verifyBounds(newPosition, s)) {
 				s->position = newPosition;
 			} else {
-				std::cout << "Collision: " << accel.y() << std::endl;
+				// collision
+				s->vel = VelocityMake(0.0,0.0); // should impulse away
+
+				//std::cout << "Collision: " << accel.y() << std::endl;
 			}
 
 			s->userForce = ForceMake(0.0,0.0);
+			s->userImpulse = ImpulseMake(0.0,0.0);
 		}
 	}
 

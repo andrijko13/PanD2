@@ -10,6 +10,7 @@
 
 #include <pand2/Sprite.h>
 #include <pand2/Engine.h>
+#include <ajx/vec2d.h>
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -25,6 +26,9 @@ enum ATEXTURES {
     TEXTURESUM,
 };
 
+pand2::SpritePtr redBall;
+pand2::Position oldpos;
+
 bool loadTextures(LTexture *textures, const SDL &sdl) {
     bool success = true;
     if (!textures[TEXTUREUP].loadFromFile("resources/up.png")) success = false;
@@ -38,7 +42,7 @@ bool loadTextures(LTexture *textures, const SDL &sdl) {
     return success;
 }
 
-void runEventLoop(const SDL &sdl, LTexture *textures, const pand2::SpritePtr &redBall) {
+void runEventLoop(const SDL &sdl, LTexture *textures) {
     bool quit = false;
     SDL_Event e;
 
@@ -49,9 +53,42 @@ void runEventLoop(const SDL &sdl, LTexture *textures, const pand2::SpritePtr &re
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
-                quit = true;
-            }
+            switch( e.type ){
+                    /* Keyboard event */
+                    /* Pass the event data onto PrintKeyInfo() */
+                    case SDL_KEYDOWN:
+                        switch( e.key.keysym.sym ){
+                            case SDLK_LEFT:
+                                std::cout << "left pressed" << std::endl;
+                                redBall->applyImpulse(pand2::ImpulseMake(-10.0,0.0));
+                                break;
+                            case SDLK_RIGHT:
+                                std::cout << "right pressed" << std::endl;
+                                redBall->applyImpulse(pand2::ImpulseMake(10.0,0.0));
+                                break;
+                            case SDLK_UP:
+                                std::cout << "up pressed" << std::endl;
+                                redBall->applyImpulse(pand2::ImpulseMake(0.0,10.0));
+                                break;
+                            case SDLK_DOWN:
+                                std::cout << "down pressed" << std::endl;
+                                redBall->applyImpulse(pand2::ImpulseMake(0.0,-10.0));
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case SDL_KEYUP:
+                        break;
+
+                    /* SDL_QUIT event (window close) */
+                    case SDL_QUIT:
+                        quit = true;
+                        break;
+
+                    default:
+                        break;
+                }
         }
 
         SDL_SetRenderDrawColor(sdl.aRenderer, 0x00, 0x00, 0x00, 0xFF);
@@ -60,7 +97,7 @@ void runEventLoop(const SDL &sdl, LTexture *textures, const pand2::SpritePtr &re
         //textures[TEXTUREBACKGROUND].render(0,0);
         //textures[TEXTUREFOO].render(240,190);
 
-        textures[TEXTUREFINAL].render(redBall->position.x(),SCREEN_HEIGHT - 100 - redBall->position.y(),&clips[0]);
+        textures[TEXTUREFINAL].render(redBall->position.x()-50,SCREEN_HEIGHT - (50 + redBall->position.y()),&clips[0]);
         //textures[TEXTUREFINAL].render(SCREEN_WIDTH-clips[1].w,0,&clips[1]);
         //textures[TEXTUREFINAL].render(0,SCREEN_HEIGHT-clips[2].h,&clips[2]);
         //textures[TEXTUREFINAL].render(SCREEN_WIDTH-clips[3].w,SCREEN_HEIGHT-clips[3].h,&clips[3]);
@@ -96,10 +133,23 @@ int setUpSDL(SDL &sdl, LTexture textures[TEXTURESUM]) {
 
 void updateWithTimeInterval(double t) {
     //std::cout << "Elapsed time: " << t << std::endl;
+    pand2::Position diff = redBall->position - oldpos;
+    if (diff.length() > ajx::epsilon) {
+
+        // can use this code to test if position changes.
+        // was used for testing. commented to unclutter iostream
+
+        //std::cout << "old position: " << oldpos.x() << " " << oldpos.y() << std::endl;
+        //std::cout << "new position: " << redBall->position.x() << " " << redBall->position.y() << std::endl;
+    }
+    oldpos = redBall->position;
+
 }
 
 int main (int argc, char **argv) {
     try {
+
+        std::cout.precision(17);
 
         SDL sdl(SDL_INIT_VIDEO|SDL_INIT_TIMER);
         LTexture textures[TEXTURESUM];
@@ -113,11 +163,12 @@ int main (int argc, char **argv) {
         // Lets set up our physics!
         pand2::Engine e(SCREEN_WIDTH, SCREEN_HEIGHT);
         e.registerUpdateLoop(updateWithTimeInterval);
+        e.setGravity(pand2::ForceMake(0.0,-0.0098));
 
         //std::vector<pand2::SpritePtr> sprites;
-        pand2::SpritePtr redBall = std::make_shared<pand2::Sprite>();
+        redBall = std::make_shared<pand2::Sprite>();
         redBall->position = pand2::PositionMake(100,100);
-        redBall->physicsBody = pand2::PhysicsBody::BodyWithCircleOfRadius(10);
+        redBall->physicsBody = pand2::PhysicsBody::BodyWithCircleOfRadius(50);
         redBall->dynamic = true;
         redBall->physicsBody.mass = 20.0;
         e.addSprite(redBall);
@@ -125,7 +176,7 @@ int main (int argc, char **argv) {
         e.start();
 
         // after setting up the physics loop, lets run the event loop to see if the user enters any information
-        runEventLoop(sdl, textures, redBall);
+        runEventLoop(sdl, textures);
 
         // if we get here, the user wanted to quit!
         e.pause(); // lets kill the thread, in case we want to start doing something afterwards

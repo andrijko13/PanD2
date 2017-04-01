@@ -10,6 +10,7 @@
 
 #include "Graph.h"
 #include "Sprite.h"
+#include "common.h"
 
 /*
  * The engine portion of the physics engine (i.e. the core)
@@ -35,6 +36,8 @@ namespace pand2 {
 
             Engine(int, int);
             ~Engine();
+
+            void setGravity(const Force &f);
 
             void addSprite(SpritePtr sprite);
             void removeAllSprites();
