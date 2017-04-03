@@ -5,6 +5,7 @@ namespace pand2 {
 		PhysicsBody body;
 		body.shape = PhysicsBodyCircle;
 		body.radius = radius;
+		body.restitution = 0.3;
 
 		return body;
 	}
@@ -15,6 +16,11 @@ namespace pand2 {
 
 	Sprite::~Sprite() {
 
+	}
+
+	void PhysicsBody::setRestitution(const double &r) {
+		restitution = r;
+		if (r > (1.0)) restitution = 1.0;
 	}
 
 	void Sprite::applyForce(const Force &f) {

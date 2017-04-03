@@ -7,7 +7,8 @@ namespace pand2 {
 								    shouldUpdate(false),
 								    frequency(pand2_update_freq),
 								    gravityVector(0.0,-.098),
-								    gravityEnabled(true) {
+								    gravityEnabled(true),
+								    treatBorderAsWall(true) {
 
 		map.bitfield = new char[w*h];
 	}
@@ -31,12 +32,32 @@ namespace pand2 {
     	gravityVector = f;
     }
 
-    bool Engine::verifyBounds(const Position &pos, const SpritePtr s) {
+    Engine::OutOfBoundsType Engine::outOfBounds(const Position &pos, const SpritePtr s) const {
     	//const Position pos = posi + PositionMake(ajx::epsilon, ajx::epsilon);
     	double radius  = s->physicsBody.radius;
 
-    	if ((pos.x() - radius - ajx::epsilon) < 0 || (pos.y() - radius - ajx::epsilon) < 0 || (pos.x() + radius + ajx::epsilon) > width || (pos.y() + radius + ajx::epsilon) > height) return false;
-    	return true;
+    	if ((pos.x() - radius - ajx::epsilon) < 0) return OutOfBoundsLeft;
+    	if ((pos.y() - radius - ajx::epsilon) < 0) return OutOfBoundsDown;
+    	if ((pos.x() + radius + ajx::epsilon) > width) return OutOfBoundsRight;
+    	if ((pos.y() + radius + ajx::epsilon) > height) return OutOfBoundsUp;
+    	return OutOfBoundsNot;
+    }
+
+    Velocity Engine::_flipVel(const Velocity &v, const OutOfBoundsType &t) const {
+    	switch (t) {
+    		case OutOfBoundsLeft:
+    		case OutOfBoundsRight:
+    			return VelocityMake(-1*v.x(), v.y());
+    			break; // here for good practice :) delete this line and u will get bad luck for 8 years
+    		case OutOfBoundsUp:
+    		case OutOfBoundsDown:
+    			return VelocityMake(v.x(), -1*v.y());
+    			break;
+    		default:
+    			return VelocityMake(v.x(), v.y());
+    			break;
+    	}
+    	return VelocityMake(v.x(), v.y()); // once again, good practice
     }
 
 	void Engine::updatePhysics(const double &elapsed) {
@@ -56,13 +77,22 @@ namespace pand2 {
 
 			// calculate new position
 			Position newPosition = (s->position + (elapsed * s->vel));
-			if (verifyBounds(newPosition, s)) {
-				s->position = newPosition;
-			} else {
+			OutOfBoundsType oobType = OutOfBoundsNot;
+			if ((oobType = outOfBounds(newPosition, s))) {
 				// collision
-				s->vel = VelocityMake(0.0,0.0); // should impulse away
+
+				if (treatBorderAsWall) {
+					s->vel = s->physicsBody.restitution * _flipVel(s->vel, oobType);
+				}
+
+				if (s->vel.length() < pand2_bounce_min) {
+					s->vel = VelocityMake(0.0,0.0); // moving too slow to bounce
+				}
 
 				//std::cout << "Collision: " << accel.y() << std::endl;
+			} else {
+				s->position = newPosition;
+
 			}
 
 			s->userForce = ForceMake(0.0,0.0);

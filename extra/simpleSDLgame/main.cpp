@@ -171,6 +171,7 @@ int main (int argc, char **argv) {
         redBall->physicsBody = pand2::PhysicsBody::BodyWithCircleOfRadius(50);
         redBall->dynamic = true;
         redBall->physicsBody.mass = 20.0;
+        redBall->physicsBody.setRestitution(1.5);
         e.addSprite(redBall);
 
         e.start();

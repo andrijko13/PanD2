@@ -32,10 +32,32 @@ namespace pand2 {
     class Engine { // TODO mark functions as const!!!
         public:
 
+            // Declaration of data strutures
+
+            typedef enum OutOfBoundsType {
+                OutOfBoundsNot = 0,
+                OutOfBoundsLeft,
+                OutOfBoundsUp,
+                OutOfBoundsRight,
+                OutOfBoundsDown,
+                OutOfBoundsTotal
+            } OutOfBoundsType;
+
+            typedef struct bitmap {
+                char *bitfield;
+            } Bitmap;
+
+            // constants
+
             const double pand2_update_freq = 70.0;
+            const double pand2_bounce_min  = 0.01;
+
+            // constructors
 
             Engine(int, int);
             ~Engine();
+
+            // methods
 
             void setGravity(const Force &f);
 
@@ -47,12 +69,9 @@ namespace pand2 {
             void pause() {shouldUpdate = false; updateThread.join();};
             void registerUpdateLoop(std::function <void (double)>func);
             void addBitmap(const char *bitfield);
-        private:
-        	// Declaration of private data strutures
 
-        	typedef struct bitmap {
-        		char *bitfield;
-        	} Bitmap;
+            bool treatBorderAsWall;
+        private:
 
         	// private instance variables
 
@@ -79,7 +98,10 @@ namespace pand2 {
             void update();
             void updatePhysics(const double &elspased);
 
-            bool verifyBounds(const Position &pos, const SpritePtr s);
+            OutOfBoundsType outOfBounds(const Position &pos, const SpritePtr s) const;
+
+            // helper functions
+            Velocity _flipVel(const Velocity &v, const OutOfBoundsType &t) const;
     };
 
 }
