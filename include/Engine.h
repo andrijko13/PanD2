@@ -50,7 +50,7 @@ namespace pand2 {
             // constants
 
             const double pand2_update_freq = 70.0;
-            const double pand2_bounce_min  = 0.01;
+            const double pand2_bounce_min  = 0.0001;
 
             // constructors
 
@@ -101,7 +101,7 @@ namespace pand2 {
             OutOfBoundsType outOfBounds(const Position &pos, const SpritePtr s) const;
 
             // helper functions
-            Velocity _flipVel(const Velocity &v, const OutOfBoundsType &t) const;
+            Velocity _flipVel(const Velocity &v, const OutOfBoundsType &t, const double &resti, const double &fric) const;
     };
 
 }

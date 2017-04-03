@@ -43,15 +43,15 @@ namespace pand2 {
     	return OutOfBoundsNot;
     }
 
-    Velocity Engine::_flipVel(const Velocity &v, const OutOfBoundsType &t) const {
+    Velocity Engine::_flipVel(const Velocity &v, const OutOfBoundsType &t, const double &resti, const double &fric) const {
     	switch (t) {
     		case OutOfBoundsLeft:
     		case OutOfBoundsRight:
-    			return VelocityMake(-1*v.x(), v.y());
+    			return VelocityMake(-1*v.x()*resti, v.y()*fric);
     			break; // here for good practice :) delete this line and u will get bad luck for 8 years
     		case OutOfBoundsUp:
     		case OutOfBoundsDown:
-    			return VelocityMake(v.x(), -1*v.y());
+    			return VelocityMake(fric*v.x(), -1*v.y()*resti);
     			break;
     		default:
     			return VelocityMake(v.x(), v.y());
@@ -82,7 +82,13 @@ namespace pand2 {
 				// collision
 
 				if (treatBorderAsWall) {
-					s->vel = s->physicsBody.restitution * _flipVel(s->vel, oobType);
+					s->vel = _flipVel(s->vel, oobType, s->physicsBody.restitution, s->physicsBody.frictionCoeff);
+				}
+
+				newPosition = (s->position + (elapsed * s->vel));
+				if (!outOfBounds(newPosition, s)) {
+					s->position = newPosition;
+					break;
 				}
 
 				if (s->vel.length() < pand2_bounce_min) {

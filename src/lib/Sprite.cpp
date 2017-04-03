@@ -23,6 +23,10 @@ namespace pand2 {
 		if (r > (1.0)) restitution = 1.0;
 	}
 
+	void PhysicsBody::setFriction(const double &f) {
+		frictionCoeff = 1.0-f;
+	}
+
 	void Sprite::applyForce(const Force &f) {
 		userForce += f;
 	}

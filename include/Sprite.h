@@ -32,9 +32,10 @@ namespace pand2 {
         public:
             enum PhysicsBodyShape {PhysicsBodyCircle, PhysicsBodyRect};
             static PhysicsBody BodyWithCircleOfRadius(double radius);
-            PhysicsBody() : width(1.0), height(1.0), radius(1.0), mass(1.0), restitution(0.3){ };
+            PhysicsBody() : width(1.0), height(1.0), radius(1.0), mass(1.0), restitution(0.3), frictionCoeff(0.9) { };
             ~PhysicsBody() { };
             void setRestitution(const double &r);
+            void setFriction(const double &f);
             double mass;
         private:
             PhysicsBodyShape shape;
@@ -42,6 +43,7 @@ namespace pand2 {
             double height;
             double radius;
             double restitution;
+            double frictionCoeff;
     };
 
     class Sprite {

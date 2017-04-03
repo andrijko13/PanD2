@@ -60,19 +60,19 @@ void runEventLoop(const SDL &sdl, LTexture *textures) {
                         switch( e.key.keysym.sym ){
                             case SDLK_LEFT:
                                 std::cout << "left pressed" << std::endl;
-                                redBall->applyImpulse(pand2::ImpulseMake(-10.0,0.0));
+                                redBall->applyImpulse(pand2::ImpulseMake(-100.0,0.0));
                                 break;
                             case SDLK_RIGHT:
                                 std::cout << "right pressed" << std::endl;
-                                redBall->applyImpulse(pand2::ImpulseMake(10.0,0.0));
+                                redBall->applyImpulse(pand2::ImpulseMake(100.0,0.0));
                                 break;
                             case SDLK_UP:
                                 std::cout << "up pressed" << std::endl;
-                                redBall->applyImpulse(pand2::ImpulseMake(0.0,10.0));
+                                redBall->applyImpulse(pand2::ImpulseMake(0.0,100.0));
                                 break;
                             case SDLK_DOWN:
                                 std::cout << "down pressed" << std::endl;
-                                redBall->applyImpulse(pand2::ImpulseMake(0.0,-10.0));
+                                redBall->applyImpulse(pand2::ImpulseMake(0.0,-100.0));
                                 break;
                             default:
                                 break;
@@ -163,7 +163,7 @@ int main (int argc, char **argv) {
         // Lets set up our physics!
         pand2::Engine e(SCREEN_WIDTH, SCREEN_HEIGHT);
         e.registerUpdateLoop(updateWithTimeInterval);
-        e.setGravity(pand2::ForceMake(0.0,-0.0098));
+        e.setGravity(pand2::ForceMake(0.0,-0.098));
 
         //std::vector<pand2::SpritePtr> sprites;
         redBall = std::make_shared<pand2::Sprite>();
@@ -171,7 +171,8 @@ int main (int argc, char **argv) {
         redBall->physicsBody = pand2::PhysicsBody::BodyWithCircleOfRadius(50);
         redBall->dynamic = true;
         redBall->physicsBody.mass = 20.0;
-        redBall->physicsBody.setRestitution(1.5);
+        redBall->physicsBody.setRestitution(0.7);
+        redBall->physicsBody.setFriction(0.0);
         e.addSprite(redBall);
 
         e.start();
