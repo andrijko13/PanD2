@@ -163,7 +163,7 @@ int main (int argc, char **argv) {
         // Lets set up our physics!
         pand2::Engine e(SCREEN_WIDTH, SCREEN_HEIGHT);
         e.registerUpdateLoop(updateWithTimeInterval);
-        e.setGravity(pand2::ForceMake(0.0,-0.098));
+        e.setGravity(pand2::ForceMake(0.0,0.0));
 
         //std::vector<pand2::SpritePtr> sprites;
         redBall = std::make_shared<pand2::Sprite>();
