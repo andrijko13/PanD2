@@ -10,7 +10,7 @@ option(compileStatic "staticCompile" OFF)
 set(CMAKE_MACOSX_RPATH 1)
 
 set(GCC_COVERAGE_COMPILE_FLAGS "-std=c++11")# -stdlib=libc++")
-set(GCC_COVERAGE_LINK_FLAGS    "")
+set(GCC_COVERAGE_LINK_FLAGS    "-lpthread -pthread")
 
 include_directories(include)
 
